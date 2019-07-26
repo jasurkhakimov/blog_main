@@ -22,3 +22,5 @@ Route::get('/about', function () {
 Route::get('/contacts', function () {
     return view('contacts');
 });
+
+Route::resource('posts', 'PostsController');
