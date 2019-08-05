@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="my-4"> Posts <a href="/posts/create/" class="btn btn-light text-primary"> Create New Post </a></h1>
+    <h1 class="my-4"> Posts 
+        @if(Auth::user()->email == 'admin@gmail.com')
+            <a href="/posts/create/" class="btn btn-light text-primary"> Create New Post </a>
+        @endif
+    </h1>
     @if(count($posts) > 0)
         @foreach ($posts as $post)
             <div class="article mb-4">

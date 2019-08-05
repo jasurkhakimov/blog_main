@@ -8,6 +8,12 @@ use App\Post;
 
 class PostsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except'=> ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +33,10 @@ class PostsController extends Controller
      */
     public function create()
     {
+        if(auth()->user()->email !== 'admin@gmail.com')
+        {
+           return redirect('/posts')->with('error', 'Access denied');
+        }
         return view('posts.create');
     }
 
@@ -73,6 +83,12 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
+        
+        if(auth()->user()->email !== 'admin@gmail.com')
+        {
+           return redirect('/posts')->with('error', 'Access denied');
+        }
+
         return view('posts.edit')->with('post', $post);
     }
 
@@ -106,6 +122,10 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
+        if(auth()->user()->email !== 'admin@gmail.com')
+        {
+           return redirect('/posts')->with('error', 'Access denied');
+        }
         $post = Post::find($id);
         $post->delete();
         return redirect('/posts')->with('success', "Post Removed");

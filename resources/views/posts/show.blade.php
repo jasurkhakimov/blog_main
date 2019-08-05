@@ -17,14 +17,17 @@
         {{$post->text}}
     </div>
 
-    <div class="my-4">
-        <a href="/posts/{{$post->id}}/edit" class="btn btn-warning shadow-sm px-4"> Edit </a>
+    @if(!Auth::guest())
+        @if(Auth::user()->email == 'admin@gmail.com')
+            <div class="my-4">
+                <a href="/posts/{{$post->id}}/edit" class="btn btn-warning shadow-sm px-4"> Edit </a>
 
-        <form class="form-inline" method="post" action="{{ route('posts.destroy', $post->id) }}" style="display: inline">
-            @csrf
-            @method('DELETE')
-            <input type="submit" value="Delete" class="btn btn-danger shadow-sm px-3">
-        </form>
-
-    </div>
+                <form class="form-inline" method="post" action="{{ route('posts.destroy', $post->id) }}" style="display: inline">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" value="Delete" class="btn btn-danger shadow-sm px-3">
+                </form>
+            </div>
+        @endif
+    @endif
 @endsection
